@@ -43,6 +43,51 @@ const base62 = {
 
 };
 
+/**
+ * @description Get size of url collection
+ */
+async function getListSize(){
+  let size = await UrlModel.find({active:true}).count();
+  return size;
+}
+
+/**
+ * @description Retrieve the complete list of active urls
+ * @param {number} limit 
+ * @param {number} page 
+ * @param {string} sortBy 
+ * @param {string} sortType 
+ */
+async function getList(limit,page,sortBy, sortType){
+  let sortObj = {};
+  sortObj[sortBy] = (sortType === 'asc')?1:-1;
+  let aggrQuery = [
+    {
+      $match:{
+        active:true
+      }
+    },{
+      $sort:sortObj
+    },{
+      $skip:(page-1) //page index base-1
+    },{
+      $project:{
+        shorten:{$concat:[`${SERVER}/`,"$hash"]},
+        url:1,
+        hash:1,
+        removeUrl:{$concat:[ `${SERVER}/`,"$hash","/remove/","$removeToken"]},
+        visitCount:{$size:"$visits"}
+      }
+    }
+  ];
+  if(limit > -1){ //Actually limit the number of elements
+    aggrQuery.push({
+      $limit:limit //No of elements per page
+    })
+  }
+  let source = await UrlModel.aggregate(aggrQuery);
+    return source;
+}
 
 /**
  * Lookup for existant, active shortened URLs by hash.
@@ -279,6 +324,8 @@ module.exports = {
   shorten,
   custom,
   getUrl,
+  getList,
+  getListSize,
   generateHash,
   generateRemoveToken,
   isValid,

@@ -37,7 +37,7 @@ export class GenerateUrlPageComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     private urlService: UrlService,
-    private modalDialog: MatDialog, ) {
+    private modalDialog: MatDialog ) {
 
   }
 

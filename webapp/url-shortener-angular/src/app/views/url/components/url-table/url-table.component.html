@@ -1,0 +1,40 @@
+<div class="row mx-3">
+  <div class="col-md-6 mx-auto">
+    <div class="md-form text-center">
+      <input type="text" class="form-control" [(ngModel)]="searchText" (keyup)="searchItems()" id="search-input"
+        mdbInput>
+      <label for="search-input" class="lead">Search</label>
+    </div>
+  </div>
+  <table mdbTable stickyHeader="true" hover="true" striped="true" class="z-depth-1">
+    <thead class="sticky-top">
+      <tr>
+        <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements" [sortBy]="headElements[i]"
+          scope="col">{{head}} <i class="fa fa-sort" *ngIf="head !== 'visit count' && head !== 'remove url'"></i>
+        </th>
+      </tr>
+    </thead>
+    <tbody #row>
+      <tr mdbTableCol (rowCreated)="onRowCreate($event)" (rowRemoved)="onRowRemove($event)" *ngFor="let urlModel of elements; let i = index">
+          <th *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" scope="row">{{urlModel.url}}</th>
+          <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex"><a (click)="onLinkClick(urlModel)" [href]="urlModel.shorten" class="lead">{{urlModel.shorten}}</a></td>
+          <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex">{{urlModel.visitCount}}</td>
+          <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex">
+              <!--Removal button-->
+            <button (click)="removeUrl(urlModel)" class="btn btn-lg btn-dark">Remove</button>
+            <p class="font-error" *ngIf="urlDeleteErrorMsg">{{urlDeleteErrorMsg}}</p></td>
+      </tr>
+    </tbody>
+    <tfoot class="grey lighten-5 w-100">
+
+      <tr>
+        <td colspan="4">
+          <mdb-table-pagination paginationAlign="" [searchDataSource]="elements" (nextPageClick)="onNextPageClick($event)"
+            (previousPageClick)="onPreviousPageClick($event)"></mdb-table-pagination>
+        </td>
+      </tr>
+
+    </tfoot>
+  </table>
+
+</div>

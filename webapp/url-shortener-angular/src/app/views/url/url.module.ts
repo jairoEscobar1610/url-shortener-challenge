@@ -8,12 +8,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UrlencodeDirective } from '../../shared/directives/urlencode.directive';
 import { SharedModule } from '../../shared/shared.module';
 import { CoreModule } from '../../core/core.module';
+import { MDBBootstrapModule, MdbIconComponent } from 'angular-bootstrap-md';
+import { UrlTableComponent } from './components/url-table/url-table.component';
 
 @NgModule({
-  declarations: [GenerateUrlPageComponent, UrlListPageComponent],
+  declarations: [GenerateUrlPageComponent, UrlListPageComponent, UrlTableComponent],
   imports: [
     CommonModule,
     FormsModule,
+    MDBBootstrapModule.forRoot(),
     ReactiveFormsModule,
     UrlRoutingModule,
     SharedModule,

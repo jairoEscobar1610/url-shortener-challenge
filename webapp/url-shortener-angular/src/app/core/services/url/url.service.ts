@@ -23,9 +23,16 @@ export class UrlService {
     private http: HttpClient,
     private logger: LoggerService) { }
 
-  /** GET url list from the server */
-  getUrlList (): Observable<Url[]> {
-    return this.http.get<Url[]>(this.apiUrl)
+  /**
+   * @description Get list of urls
+   * @param noOfElements 
+   * @param page 
+   * @param sortBy 
+   * @param sortType asc or desc
+   */
+  getUrlList (noOfElements:number, page:number,sortBy:string, sortType:string): Observable<Url[]> {
+    const url = `${this.apiUrl}/list/${noOfElements}/${page}/${sortBy}/${sortType}`;
+    return this.http.get<Url[]>(url)
       .pipe(
         tap(_ => this.log('fetched urls')),
         catchError(this.handleError('getUrlList', []))

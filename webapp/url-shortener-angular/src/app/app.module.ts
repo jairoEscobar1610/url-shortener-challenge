@@ -19,6 +19,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatButtonModule, MatDialogModule, MatListModule, MatProgressBarModule } from '@angular/material';
 import { DialogComponent } from './shared/components/dialog/dialog.component';
 import { MaterialModule } from './material.module';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +31,7 @@ import { MaterialModule } from './material.module';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    
+    MDBBootstrapModule.forRoot(),
     NgxSpinnerModule,
     BrowserAnimationsModule,
     MatDialogModule,
