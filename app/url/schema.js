@@ -1,5 +1,7 @@
 const mongo = require('../../server/mongodb');
 const mongoose = require('mongoose');
+const visitModel = require('../visit/schema')
+
 
 module.exports = mongo.model('Url', new mongoose.Schema({
   url: {
@@ -38,5 +40,8 @@ module.exports = mongo.model('Url', new mongoose.Schema({
     type: Boolean,
     required: true,
     default: true
-  }
+  },
+
+  //Visit count
+  visits: [visitModel]
 }));

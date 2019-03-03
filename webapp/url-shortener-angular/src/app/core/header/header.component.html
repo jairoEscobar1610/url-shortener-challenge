@@ -1,0 +1,28 @@
+<nav class="navbar navbar-light bg-dark">
+  <span class="navbar-brand mb-0 h1">
+    <a class="lead h5 bold font-white" [routerLink]="['/home']">
+    <p >URL-SHORTENER</p>
+    </a>
+  </span>
+</nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark border-bottom-white">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="row collapse navbar-collapse br-padding-right-md" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto font-white">
+        <li class="nav-item">
+            <a class="nav-link br-tc-white br-cursor-pointer" [routerLink]="['/home']" >Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link br-tc-white br-cursor-pointer" [routerLink]="['/generate']">New URL</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link br-tc-white br-cursor-pointer" [routerLink]="['/list']">Saved URLs</a>
+        </li>
+       
+      </ul>
+  </div>
+</nav>
+<router-outlet  (activate)="onActivate($event)" ></router-outlet>

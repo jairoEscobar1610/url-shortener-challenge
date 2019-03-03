@@ -1,0 +1,47 @@
+
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+$whitened:#F2F2F2;
+$darkened:#282828;
+
+.bg-dark{
+    background-color: $darkened !important;
+}
+
+.border-bottom-white{
+    border-bottom: 1px solid $whitened;
+}
+
+.font-white, .font-white p, .font-white a{
+    color:$whitened !important;
+}
+
+.font-dark{
+    color: $darkened;
+}
+
+.font-error{
+    color:red;
+}
+
+.h-150px{
+    height:150px !important;
+}
+
+.h-75{
+    height: 75vh !important;
+}
+
+.h-60{
+    height: 60vh !important;
+}
+
+.btn-dark-border{
+    border: 1px solid $darkened;
+}
+
+.btn-size-big{
+    width:150px;
+    height:50px;
+    
+}

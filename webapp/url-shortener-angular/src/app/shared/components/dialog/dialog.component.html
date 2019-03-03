@@ -1,0 +1,26 @@
+
+<div mat-dialog-content>
+    <h1  class="text-center">{{dialogModel.title}}</h1>
+    <div class="row p-3">
+      <p class="h7" *ngFor="let paragraph of dialogModel.body">{{paragraph}}</p>
+  </div>
+  </div>
+  
+  <div mat-dialog-actions class="text-center pb-5">
+    <div class="row text-center w-100" *ngIf="dialogModel.cancelText">
+        <div class="col-6">
+            <button mat-button mat-dialog-close (click)="onCancelClick()" class="btn btn-dark btn-lg w-100">{{dialogModel.cancelText}}</button>
+        </div>
+        <div class="col-6">
+              <button mat-button mat-dialog-close  (click)="onAcceptClick()" class="btn btn-light btn-lg w-100">{{dialogModel.acceptText}}</button>
+          </div>
+    </div>
+    <div class="row text-center w-100" *ngIf="!dialogModel.cancelText">
+  
+      <div class="col-6 offset-3">
+          <button mat-button mat-dialog-close (click)="onAcceptClick()" class="btn btn-light btn-lg w-75">{{dialogModel.acceptText}}</button>
+      </div>
+  </div>
+    
+    
+  </div>

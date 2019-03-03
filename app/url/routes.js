@@ -1,17 +1,22 @@
 const router = require('express').Router();
 const url = require('./url');
-
+const { domain } = require('../../environment');
+const SERVER = `${domain.protocol}://${domain.host}`;
 
 router.get('/:hash', async (req, res, next) => {
 
+  //Get url and register visit
   const source = await url.getUrl(req.params.hash);
 
-  // TODO: Respond accordingly when the hash wasn't found (404 maybe?)
+  //Respond accordingly when the hash wasn't found
+  if(!source){
+    return res.status(404).send({error:`${SERVER}/${req.params.hash} not found`});
+  }
 
   // TODO: Hide fields that shouldn't be public
-
-  // TODO: Register visit
-
+  delete source.protocol;
+  delete source.domain;
+  delete source.path;
 
   // Behave based on the requested format using the 'Accept' header.
   // If header is not provided or is */* redirect instead.
@@ -33,23 +38,57 @@ router.get('/:hash', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
 
-  // TODO: Validate 'req.body.url' presence
-
+  // Validate 'req.body.url' presence
+  if(!req.body.url){
+    return res.status(400).send({message:"The url field is required."})
+  }
   try {
-    let shortUrl = await url.shorten(req.body.url, url.generateHash(req.body.url));
+    let shortUrl = await url.shorten(req.body.url, await url.generateHash(req.body.url));
     res.json(shortUrl);
   } catch (e) {
-    // TODO: Personalized Error Messages
-    next(e);
+    //Personalized Error Messages
+    res.status(500).send({message:"The url format is invalid or the service is temporary unavailable, please try again. "})
+    //next(e);
+  }
+});
+
+/**
+ * @description Create custom urls
+ */
+router.post('/custom', async (req, res, next) => {
+
+  // Validate 'req.body.url' and 'req.body.hash' presence
+  if(!req.body.url){
+    return res.status(400).send({message:"The url field is required."})
+  }
+  if(!req.body.hash){
+    return res.status(400).send({message:"The hash field is required."})
+  }
+  try {
+    let shortUrl = await url.custom(req.body.url, req.body.hash);
+    if(!shortUrl){ return res.status(400).send({message:"The specified hash is already in use"}) }
+    res.json(shortUrl);
+  } catch (e) {
+    //Personalized Error Messages
+    console.log(e);
+    res.status(500).send({message:"The url or hash format is invalid or the service is temporary unavailable, please try again. "})
+    //next(e);
   }
 });
 
 
-router.delete('/:hash/:removeToken', async (req, res, next) => {
-  // TODO: Remove shortened URL if the remove token and the hash match
-  let notImplemented = new Error('Not Implemented');
-  notImplemented.status = 501;
-  next(notImplemented);
+router.delete('/:hash/remove/:removeToken', async (req, res, next) => {
+  //Remove shortened URL if the remove token and the hash match
+  try{
+    let removeResult = await url.deleteUrl(req.params.hash, req.params.removeToken);
+    if(removeResult){
+      res.send({message:`${SERVER}/${req.params.hash} has been succesfully removed`});
+    }else{
+      return res.status(400).send({message: `${SERVER}/${req.params.hash} cannot be removed, the specified url could not exist`});
+    }
+  }catch(err){
+    res.status(500).send({message:"The hash format is invalid or the service is temporary unavailable, please try again. "}) 
+  }
 });
 
 module.exports = router;

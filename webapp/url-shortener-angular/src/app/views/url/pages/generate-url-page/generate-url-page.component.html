@@ -1,0 +1,77 @@
+<div class="jumbotron jumbotron-fluid pb-5" #topSection>
+  <div class="row d-flex flex-wrap left-content-around justify-content-center">
+    <div class="card col-12 col-md-8 shadow mb-4 py-5">
+      <form novalidate (ngSubmit)="urlSubmit()" [formGroup]="urlForm">
+        <div class="card-body">
+          <h3 class="card-title text-center">First: Enter the URL you want to shorten</h3>
+          <p class="card-text">Paste/Write the URL below:</p>
+          <div class="row">
+            <div class="col pr-0">
+              <input type="text" class="form-control form-control-lg" placeholder="(Paste link here)" formControlName="url" urlencode [ngClass]="{'is-invalid': urlForm.get('url').hasError('validUrl') && showFormErrorMessages}"
+              />
+            </div>
+            <div class="col-sm col-sm-auto pl-0">
+              <button type="submit" class="btn btn-lg btn-dark mb-2">Next</button>
+            </div>
+          </div>
+          <p class="font-error" *ngIf="urlForm.get('url').hasError('validUrl') && showFormErrorMessages">Invalid URL format</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container pt-3"  #generateSection>
+  <div class="row d-flex flex-wrap left-content-around justify-content-left" *ngIf="isGenerateSectionEnabled">
+    <div class="card col-12 col-lg-5 shadow mb-4 py-5">
+      <div class="card-body">
+        <h3 class="card-title text-center">Then: Generate the new url</h3>
+        <p class="card-text">Click on the button below:</p>
+        <div class="container-fluid text-center">
+          <button type="submit" class="btn btn-lg btn-dark mb-2" (click)="generateUrl()">Generate</button>
+        </div>
+        <p class="font-error" *ngIf="urlGenerateErrorMsg">{{urlGenerateErrorMsg}}</p>
+      </div>
+    </div>
+    <div class="col-12 col-lg-2 mb-4 text-center pt-3">
+      <p class="lead">OR</p>
+    </div>
+    <div class="card col-12 col-lg-5 shadow mb-4 py-5">
+      <form novalidate (ngSubmit)="hashSubmit()" [formGroup]="hashForm">
+        <div class="card-body">
+          <h3 class="card-title text-center">Create a custom url</h3>
+          <p class="card-text">The short code must be 7 characters long and it must contain alphabet/numbers only</p>
+          <div class="row">
+            <div class="col pr-0">
+              <input type="text" class="form-control form-control-lg" placeholder="(e.g. A54Bde1)" formControlName="hash"
+                maxlength="7"
+                [ngClass]="{ 'is-invalid': hashForm.get('hash').hasError('validHash') && showFormErrorMessages}" />
+            </div>
+            <div class="col-sm col-sm-auto pl-0">
+              <button type="submit" class="btn btn-lg btn-dark mb-2">Validate</button>
+            </div>
+          </div>
+          <p class="font-error" *ngIf="urlCustomErrorMsg">{{urlCustomErrorMsg}}</p>
+          <p class="font-error" *ngIf="hashForm.get('hash').hasError('validHash') && showFormErrorMessages">Invalid url code format</p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="jumbotron jumbotron-fluid pb-5" #bottomSection>
+  <div class="row d-flex flex-wrap left-content-around justify-content-center" *ngIf="isResultSectionEnabled">
+    <div class="card col-12 col-md-8 shadow mb-4 py-5">
+      <div class="card-body">
+        <h3 class="card-title text-center">Congratulations!</h3>
+        <p class="card-text">Here is your new url:</p>
+        <div class="container text-center my-5">
+          <a [href]="generatedUrlModel.shorten" class="h3">{{generatedUrlModel.shorten}}</a>
+        </div>
+        <div class="container text-center">
+          <!--Removal button-->
+          <button (click)="removeUrl()" class="btn btn-lg btn-dark">Remove</button>
+        </div>
+        <p class="font-error" *ngIf="urlDeleteErrorMsg">{{urlDeleteErrorMsg}}</p>
+      </div>
+    </div>
+  </div>
+</div>
