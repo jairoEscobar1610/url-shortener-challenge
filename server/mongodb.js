@@ -3,7 +3,6 @@ mongoose.Promise = global.Promise; // Use JavaScript promises
 const { Mongo } = require('../environment');
 
 const uri = `mongodb://${Mongo.HOST}:${Mongo.PORT}/${Mongo.NAME}`;
-
 /**
  , {
   auth: { authSource: Mongo.AUTH },
