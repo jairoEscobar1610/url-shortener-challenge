@@ -78,7 +78,6 @@ router.post('/', async (req, res, next) => {
   } catch (e) {
     //Personalized Error Messages
     res.status(500).send({ message: "The url format is invalid or the service is temporary unavailable, please try again. " })
-    //next(e);
   }
 });
 
@@ -102,7 +101,6 @@ router.post('/custom', async (req, res, next) => {
     //Personalized Error Messages
     console.log(e);
     res.status(500).send({ message: "The url or hash format is invalid or the service is temporary unavailable, please try again. " })
-    //next(e);
   }
 });
 
