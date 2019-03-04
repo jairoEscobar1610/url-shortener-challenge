@@ -10,7 +10,7 @@
     <thead class="sticky-top">
       <tr>
         <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements" [sortBy]="headElements[i]"
-          scope="col">{{head}} <i class="fa fa-sort" *ngIf="head !== 'visit count' && head !== 'remove url'"></i>
+          scope="col">{{head}} <i class="fa fa-sort" *ngIf="head !== 'visit count' && head !== 'createdAt' && head !== 'remove url'"></i>
         </th>
       </tr>
     </thead>
@@ -19,9 +19,10 @@
           <th *ngIf="i+1 >= firstItemIndex && i < lastItemIndex" scope="row">{{urlModel.url}}</th>
           <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex"><a (click)="onLinkClick(urlModel)" [href]="urlModel.shorten" class="lead">{{urlModel.shorten}}</a></td>
           <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex">{{urlModel.visitCount}}</td>
+          <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex">{{urlModel.createdAt | date:'short'}}</td>
           <td *ngIf="i+1 >= firstItemIndex && i < lastItemIndex">
               <!--Removal button-->
-            <button (click)="removeUrl(urlModel)" class="btn btn-lg btn-dark">Remove</button>
+            <button (click)="removeUrl(urlModel)" [id]="'remove-'+i" class="btn btn-lg btn-dark">Remove</button>
             <p class="font-error" *ngIf="urlDeleteErrorMsg">{{urlDeleteErrorMsg}}</p></td>
       </tr>
     </tbody>

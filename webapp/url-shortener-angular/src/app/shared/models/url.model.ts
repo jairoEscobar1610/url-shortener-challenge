@@ -14,8 +14,24 @@ export class Url implements Deserializable {
 
     public shorten:string;
     public removeUrl:string;
-    public visits:Visit;
+    public visits:Visit[];
     public visitCount:number;
+
+    constructor(){
+        this._id = "";
+        this.url="";
+        this.user="";
+        this.hash="";
+        this.isCustom = false;
+        this.removeToken="";
+        this.createdAt=undefined;
+        this.removedAt=undefined;
+        this.active=true;
+        this.shorten="";
+        this.removeUrl="";
+        this.visits=new Array<Visit>();
+        this.visitCount = 0;
+    }
 
     /**
      * @author Jairo Juvenal Escobar Calzada

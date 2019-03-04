@@ -22,10 +22,12 @@ export class UrlTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Output()
   removeElement = new EventEmitter<Url>();
 
+  //Table control attributes
   previous:Array<Url> = new Array<Url>();
   headElements = ["url",
   "shorten",
   "visit count",
+  "createdAt",
   "remove url"];
 
   firstItemIndex;
@@ -48,6 +50,7 @@ export class UrlTableComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit() {
+
   }
 
   ngAfterViewInit() {
@@ -56,6 +59,8 @@ export class UrlTableComponent implements OnInit, AfterViewInit, OnChanges {
   public ngOnChanges(): void {
      //Update datatable data
      this.tableService.setDataSource(this.elements);
+
+
      this.elements = this.tableService.getDataSource();
      this.previous = this.tableService.getDataSource();
 
@@ -76,16 +81,25 @@ export class UrlTableComponent implements OnInit, AfterViewInit, OnChanges {
     visitedUrl.visitCount ++;
   }
 
+  /**
+   * Datatable add row
+   */
   addNewRow() {
     // tslint:disable-next-line:max-line-length
     this.emitDataSourceChange();
   }
 
+  /**
+   * Datatable add row after
+   */
   addNewRowAfter() {
    
     this.emitDataSourceChange();
   }
 
+  /**
+   * Datatable remove last row
+   */
   removeLastRow() {
     this.tableService.removeLastRow();
     this.emitDataSourceChange();
@@ -94,15 +108,12 @@ export class UrlTableComponent implements OnInit, AfterViewInit, OnChanges {
     });
   }
 
+  /**
+   * Datatable remove row
+   */
   removeRow() {
     this.tableService.removeRow(1);
-    this.tableService.getDataSource().forEach((el, index) => {
-      el.id = (index + 1).toString();
-    });
     this.emitDataSourceChange();
-    this.tableService.rowRemoved().subscribe((data) => {
-      console.log(data);
-    });
   }
 
   emitDataSourceChange() {
@@ -112,7 +123,9 @@ export class UrlTableComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
 
-
+/**
+ * DataTAble search items
+ */
   searchItems() {
     const prev = this.tableService.getDataSource();
 
@@ -136,7 +149,10 @@ export class UrlTableComponent implements OnInit, AfterViewInit, OnChanges {
     
   }
 
-
+/**
+ * DataTable page controllers
+ * @param data 
+ */
   onNextPageClick(data: any) {
     this.firstItemIndex = data.first;
     this.lastItemIndex = data.last;

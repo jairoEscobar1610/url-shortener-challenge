@@ -19,8 +19,7 @@ import { UrlTableComponent } from './components/url-table/url-table.component';
     MDBBootstrapModule.forRoot(),
     ReactiveFormsModule,
     UrlRoutingModule,
-    SharedModule,
-    
+    SharedModule
 
   ],
   providers:[]

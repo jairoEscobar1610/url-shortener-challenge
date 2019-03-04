@@ -10,7 +10,7 @@ import { Dialog } from '../../models/dialog.model';
   styleUrls: ['./dialog.component.scss']
 })
 export class DialogComponent {
-  private dialogModel:Dialog;
+  public dialogModel:Dialog;
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,

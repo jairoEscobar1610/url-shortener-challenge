@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light bg-dark">
   <span class="navbar-brand mb-0 h1">
-    <a class="lead h5 bold font-white" [routerLink]="['/home']">
+    <a class="lead h5 bold font-white" id="logolink" [routerLink]="['/home']">
     <p >URL-SHORTENER</p>
     </a>
   </span>
@@ -13,16 +13,18 @@
   <div class="row collapse navbar-collapse br-padding-right-md" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto font-white">
         <li class="nav-item">
-            <a class="nav-link br-tc-white br-cursor-pointer" [routerLink]="['/home']" >Home</a>
+            <a class="nav-link br-tc-white br-cursor-pointer" id="homelink" [routerLink]="['/home']" >Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link br-tc-white br-cursor-pointer" [routerLink]="['/generate']">New URL</a>
+            <a class="nav-link br-tc-white br-cursor-pointer" id="generatelink" [routerLink]="['/generate']">New URL</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link br-tc-white br-cursor-pointer" [routerLink]="['/list']">Saved URLs</a>
+            <a class="nav-link br-tc-white br-cursor-pointer" id="listlink" [routerLink]="['/list']">Saved URLs</a>
         </li>
        
       </ul>
   </div>
 </nav>
+<!--Loader spinner-->
+<app-loader></app-loader>
 <router-outlet  (activate)="onActivate($event)" ></router-outlet>

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoaderComponent } from './loader.component';
+import { Component } from '@angular/core';
 
 describe('LoaderComponent', () => {
   let component: LoaderComponent;
@@ -8,7 +9,7 @@ describe('LoaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoaderComponent ]
+      declarations: [ LoaderComponent, MockLoaderComponent ]
     })
     .compileComponents();
   }));
@@ -23,3 +24,9 @@ describe('LoaderComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+@Component({
+  selector: 'ngx-spinner',
+  template: ''
+})
+class MockLoaderComponent {
+}

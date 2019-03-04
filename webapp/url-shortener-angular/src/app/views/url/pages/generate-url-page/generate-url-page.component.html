@@ -11,10 +11,10 @@
               />
             </div>
             <div class="col-sm col-sm-auto pl-0">
-              <button type="submit" class="btn btn-lg btn-dark mb-2">Next</button>
+              <button id="submitUrl" type="submit" class="btn btn-lg btn-dark mb-2">Next</button>
             </div>
           </div>
-          <p class="font-error" *ngIf="urlForm.get('url').hasError('validUrl') && showFormErrorMessages">Invalid URL format</p>
+          <p class="font-error" id="urlError" *ngIf="urlForm.get('url').hasError('validUrl') && showFormErrorMessages">Invalid URL format</p>
         </div>
       </form>
     </div>
@@ -42,16 +42,17 @@
           <p class="card-text">The short code must be 7 characters long and it must contain alphabet/numbers only</p>
           <div class="row">
             <div class="col pr-0">
-              <input type="text" class="form-control form-control-lg" placeholder="(e.g. A54Bde1)" formControlName="hash"
+              <input type="text" class="form-control form-control-lg" placeholder="(e.g. A54Bde1)" 
+              formControlName="hash"
                 maxlength="7"
                 [ngClass]="{ 'is-invalid': hashForm.get('hash').hasError('validHash') && showFormErrorMessages}" />
             </div>
             <div class="col-sm col-sm-auto pl-0">
-              <button type="submit" class="btn btn-lg btn-dark mb-2">Validate</button>
+              <button type="submit" id="hashSubmit" class="btn btn-lg btn-dark mb-2">Validate</button>
             </div>
           </div>
-          <p class="font-error" *ngIf="urlCustomErrorMsg">{{urlCustomErrorMsg}}</p>
-          <p class="font-error" *ngIf="hashForm.get('hash').hasError('validHash') && showFormErrorMessages">Invalid url code format</p>
+          <p class="font-error" id="customValidateError" *ngIf="urlCustomErrorMsg">{{urlCustomErrorMsg}}</p>
+          <p class="font-error" id="customHashError" *ngIf="hashForm.get('hash').hasError('validHash') && showFormErrorMessages">Invalid url code format</p>
         </div>
       </form>
     </div>

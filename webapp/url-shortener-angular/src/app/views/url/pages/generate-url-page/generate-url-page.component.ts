@@ -16,8 +16,8 @@ import { DialogComponent } from '../../../../shared/components/dialog/dialog.com
 })
 export class GenerateUrlPageComponent implements OnInit {
   private generatedUrlModel: Url;
-  private urlForm: FormGroup;
-  private hashForm: FormGroup; 
+  public urlForm: FormGroup;
+  public hashForm: FormGroup; 
   
   //HTML elements
   @ViewChild('topSection') topSection;
@@ -27,13 +27,13 @@ export class GenerateUrlPageComponent implements OnInit {
   private dialogModel: Dialog;
 
   //Error label handling
-  private isGenerateSectionEnabled: boolean;
-  private isResultSectionEnabled: boolean;
-  private showFormErrorMessages: boolean;
+  public isGenerateSectionEnabled: boolean;
+  public isResultSectionEnabled: boolean;
+  public showFormErrorMessages: boolean;
 
-  private urlGenerateErrorMsg: string;
-  private urlDeleteErrorMsg: string;
-  private urlCustomErrorMsg:string;
+  public urlGenerateErrorMsg: string;
+  public urlDeleteErrorMsg: string;
+  public urlCustomErrorMsg:string;
   constructor(private fb: FormBuilder,
     private spinner: NgxSpinnerService,
     private urlService: UrlService,
@@ -75,6 +75,7 @@ export class GenerateUrlPageComponent implements OnInit {
     } else {
       //If the url is ok, then proceed
       this.isGenerateSectionEnabled = true;
+      this.isResultSectionEnabled = false;
       this.scrollToElement(this.generateSection.nativeElement);
 
     }
@@ -94,7 +95,12 @@ export class GenerateUrlPageComponent implements OnInit {
       .subscribe(res => {
         //Error exists
         if (res["error"]) {
-          this.urlCustomErrorMsg = `Service: ${res["error"]["message"]}`;
+          if(res["status"] === 0){ //No internet
+            this.urlCustomErrorMsg = "No internet connection or the service is temporarily unavailable. Please try again later."
+          }else{ //Internal server errors (404, 500, 400)
+            this.urlCustomErrorMsg = `Service: ${res["error"]["message"]}`;
+          }
+          
         } else {
           this.generatedUrlModel.deserialize(res);
           this.isResultSectionEnabled = true;
@@ -116,7 +122,12 @@ export class GenerateUrlPageComponent implements OnInit {
       .subscribe(res => {
         //Error exists
         if (res["error"]) {
-          this.urlGenerateErrorMsg = res["error"]["message"]
+          if(res["status"] === 0){ //No internet
+            this.urlGenerateErrorMsg = "No internet connection or the service is temporarily unavailable. Please try again later."
+          }else{ //Internal server errors (404, 500, 400)
+            this.urlGenerateErrorMsg = res["error"]["message"]
+          }
+         
         } else {
           this.generatedUrlModel.deserialize(res);
           this.isResultSectionEnabled = true;
@@ -140,7 +151,11 @@ export class GenerateUrlPageComponent implements OnInit {
   }
 
   /**
-   * Open modal dialog
+   * @description Open modal dialog
+   * @param title 
+   * @param body 
+   * @param acceptText 
+   * @param cancelText 
    */
   fnOpenRemoveDialog(title: string, body: Array<string>, acceptText: string, cancelText: string): void {
     //Initialize dialog data
@@ -163,7 +178,12 @@ export class GenerateUrlPageComponent implements OnInit {
           .subscribe(res => {
             //Error exists
             if (res["error"]) {
-              this.urlDeleteErrorMsg = `Service: ${res["error"]["message"]}`;
+              if(res["status"] === 0){ //No internet
+                this.urlDeleteErrorMsg = "No internet connection or the service is temporarily unavailable. Please try again later."
+              }else{ //Internal server errors (404, 500, 400)
+                this.urlDeleteErrorMsg = `Service: ${res["error"]["message"]}`;
+              }
+              
             } else {
               this.isGenerateSectionEnabled = false;
               this.isResultSectionEnabled = false;

@@ -22,22 +22,21 @@ import { MaterialModule } from './material.module';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 @NgModule({
   declarations: [
-    AppComponent,
-    LoaderComponent
+    AppComponent
   ],
   imports: [
+    CoreModule,
     BrowserModule,
     HttpClientModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     MDBBootstrapModule.forRoot(),
-    NgxSpinnerModule,
     BrowserAnimationsModule,
     MatDialogModule,
     HomeModule,
     UrlModule,
-    CoreModule,
+    
     SharedModule,
     AppRoutingModule
   ],

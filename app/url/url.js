@@ -75,6 +75,7 @@ async function getList(limit,page,sortBy, sortType){
         shorten:{$concat:[`${SERVER}/`,"$hash"]},
         url:1,
         hash:1,
+        createdAt:1,
         removeUrl:{$concat:[ `${SERVER}/`,"$hash","/remove/","$removeToken"]},
         visitCount:{$size:"$visits"}
       }
@@ -159,6 +160,7 @@ async function generateRemoveToken() {
     removeToken = base62.fill(removeToken);
     break;
   }
+  removeToken = ((new Date()).getTime()).toString(36) + removeToken; //Diff between hash token and remove token
   //If the iterator reaches the MAX_ITERATIONS, then return undefined, if not, return removeToken
   return (iterations > MAX_ITERATIONS) ? undefined : removeToken;
 }

@@ -14,30 +14,17 @@ import { DialogComponent } from '../../../../shared/components/dialog/dialog.com
 })
 export class UrlListPageComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(MdbTableDirective) mdbTable: MdbTableDirective;
-  @ViewChild(MdbTablePaginationComponent) mdbPagination: MdbTablePaginationComponent;
-  @ViewChild('row') row: ElementRef;
-
+  //DataTable data
   elements: Array<Url> = new Array<Url>();
-  previous:Array<Url> = new Array<Url>();
-  headElements = ["url",
-  "shorten",
-  "visit count",
-  "remove url"];
-
-  firstItemIndex;
-  lastItemIndex;
-  searchText="";
   currentPage = 1;
   pages = 0;
-  elemsPerPage = 10;
 
   private dialogModel: Dialog;
 
   //Error label handling
 
-  private urlDeleteErrorMsg: string;
-  private urlListErrorMsg:string;
+  public urlDeleteErrorMsg: string;
+  public urlListErrorMsg:string;
 
   constructor(private tableService: MdbTableService,
     private cdRef: ChangeDetectorRef,
@@ -59,11 +46,17 @@ export class UrlListPageComponent implements OnInit, AfterViewInit {
   fetchList(): void {
     this.urlListErrorMsg = undefined;
     this.spinner.show();
-    this.urlService.getUrlList(-1,this.currentPage,"createdAt","asc")
+    this.urlService.getUrlList(-1,this.currentPage,"createdAt","desc")
       .subscribe(res => {
+        
         //Error exists
         if (res["error"]) {
-          this.urlListErrorMsg = res["error"]["message"]
+          if(res["status"] === 0){ //No internet
+            this.urlListErrorMsg = "No internet connection or the service is temporarily unavailable. Please try again later."
+          }else{ //Internal server errors (404, 500, 400)
+            this.urlListErrorMsg = res["error"]["message"];
+          }
+          
         } else {
           this.elements = res["list"];
           this.pages = res["pages"];
@@ -88,7 +81,12 @@ export class UrlListPageComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Open modal dialog
+   * @description Open modal dialog
+   * @param urlToRemove Binded url model to remove
+   * @param title 
+   * @param body 
+   * @param acceptText 
+   * @param cancelText 
    */
   fnOpenRemoveDialog(urlToRemove:Url, title: string, body: Array<string>, acceptText: string, cancelText: string): void {
     //Initialize dialog data
@@ -111,7 +109,12 @@ export class UrlListPageComponent implements OnInit, AfterViewInit {
           .subscribe(res => {
             //Error exists
             if (res["error"]) {
-              this.urlDeleteErrorMsg = `Service: ${res["error"]["message"]}`;
+              if(res["status"] === 0){ //No internet
+                this.urlDeleteErrorMsg = "No internet connection or the service is temporarily unavailable. Please try again later."
+              }else{ //Internal server errors (404, 500, 400)
+                this.urlDeleteErrorMsg = `Service: ${res["error"]["message"]}`;
+              }
+              
             } else {
               this.elements.splice(
                 this.elements.findIndex(elem=>{

@@ -1,15 +1,19 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { Component } from '@angular/core';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        MockHeaderComponent,
+        MockFooterComponent
       ],
     }).compileComponents();
   }));
@@ -26,10 +30,17 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('url-shortener-angular');
   });
 
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to url-shortener-angular!');
-  });
+
+  @Component({
+    selector: 'app-header',
+    template: ''
+  })
+  class MockHeaderComponent {
+  }
+  @Component({
+    selector: 'app-footer',
+    template: ''
+  })
+  class MockFooterComponent {
+  }
 });

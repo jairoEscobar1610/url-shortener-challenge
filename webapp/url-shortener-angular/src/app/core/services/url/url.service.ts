@@ -17,7 +17,7 @@ const httpOptions = {
 })
 export class UrlService {
 
-  private apiUrl = environment.apiUrl;  // URL to web api
+  public apiUrl = environment.apiUrl;  // URL to web api
 
   constructor(
     private http: HttpClient,

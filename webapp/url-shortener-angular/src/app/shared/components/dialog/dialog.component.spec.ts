@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DialogComponent } from './dialog.component';
+import { MatDialogModule, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Component } from '@angular/core';
+import { NgxSpinnerModule, NgxSpinnerComponent } from 'ngx-spinner';
+import { LoggerService } from '../../../core/services/logger.service';
 
 describe('DialogComponent', () => {
   let component: DialogComponent;
@@ -8,7 +13,12 @@ describe('DialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialogComponent ]
+      declarations: [ DialogComponent,MockLoaderComponent ],
+      imports:[MatDialogModule, RouterTestingModule],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} }
+    ]
     })
     .compileComponents();
   }));
@@ -22,4 +32,13 @@ describe('DialogComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  
 });
+
+@Component({
+  selector: 'ngx-spinner',
+  template: ''
+})
+class MockLoaderComponent {
+}

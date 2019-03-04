@@ -3,7 +3,7 @@
     <h2>Saved URLs</h2>
   </div>
   <hr/>
-  <h3 class="font-error" *ngIf="urlListErrorMsg">{{urlListErrorMsg}}</h3>
+  <h6 class="font-error text-center" *ngIf="urlListErrorMsg">{{urlListErrorMsg}}</h6>
   <!--Table component-->
   <app-url-table [elements]="elements" (removeElement)="removeUrl($event)"></app-url-table>
   

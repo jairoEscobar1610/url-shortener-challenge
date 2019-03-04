@@ -7,12 +7,16 @@ import { RouterModule } from '@angular/router';
 import { UrlService } from './services/url/url.service';
 import { LoggerService } from './services/logger.service';
 import { ConsoleLoggerService } from './services/console-logger.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoaderComponent } from '../shared/components/loader/loader.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent, PageNotFoundComponent],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    SharedModule
   ],
   exports:[
     HeaderComponent, FooterComponent, PageNotFoundComponent
